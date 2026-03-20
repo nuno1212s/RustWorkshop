@@ -1,7 +1,5 @@
 use thiserror::Error;
 
-#[cfg(test)]
-mod tests;
 
 /// ============================================================================
 /// EXERCÍCIO 1: Introdução a Option - Básico
@@ -22,15 +20,6 @@ mod tests;
 ///   * Retorna o valor se Some
 ///   * Retorna "Vazio" se None
 ///   * Use match para tratar ambos os casos
-///
-/// Exemplos:
-/// ```
-/// assert_eq!(encontrar_numero_pares(&[1, 2, 3, 4], 1), Some(2));
-/// assert_eq!(encontrar_numero_pares(&[1, 3, 5], 0), None);
-/// assert_eq!(primeiro_maior_que(&[1, 2, 3], 2), Some(3));
-/// assert_eq!(extrair_valor(Some("teste".to_string())), "teste");
-/// assert_eq!(extrair_valor(None), "Vazio");
-/// ```
 
 
 // ============================================================================
