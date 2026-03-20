@@ -7,115 +7,115 @@ mod test;
 /// Quadrado, circulo, elipse, Triângulo, Cubo, Cilindro, Esfera
 
 /// Todas essas formas devem implementar métodos para calcular a área
-/// e o perímetro.
+/// ,o perímetro e para retornar o nome da forma
 /// Devem também partilhar alguns atributos:
 /// Local base (x,y), cor e ângulo de colocação
 
 /// Para conseguir implementar isto, deve recorrer a Composição e sum types
 
 // ============================================================================
-// EXERCISE 3: String and Number Matching
+// EXERCÍCIO 3: Correspondência de Strings e Números
 // ============================================================================
-/// Practice matching on different types (strings, numbers, etc).
+/// Pratique a correspondência em diferentes tipos (strings, números, etc).
 ///
-/// Requirements:
-/// - Implement `fn classify_grade(score: u32) -> &'static str` that:
+/// Requisitos:
+/// - Implemente `fn classificar_nota(pontuacao: u32) -> &'static str` que:
 ///   * 90-100 -> "A"
 ///   * 80-89 -> "B"
 ///   * 70-79 -> "C"
 ///   * 60-69 -> "D"
 ///   * 0-59 -> "F"
-/// - Implement `fn parse_command(input: &str) -> String` that:
-///   * "start" -> "Starting application..."
-///   * "stop" -> "Stopping application..."
-///   * "status" -> "Status: running"
-///   * anything else -> "Unknown command"
-/// - Use match with range patterns for numbers
-/// - Use match with string slices for commands
+/// - Implemente `fn processar_comando(entrada: &str) -> String` que:
+///   * "iniciar" -> "Iniciando aplicação..."
+///   * "parar" -> "Parando aplicação..."
+///   * "estado" -> "Estado: em execução"
+///   * qualquer outra coisa -> "Comando desconhecido"
+/// - Use match com padrões de intervalo para números
+/// - Use match com fatias de string para comandos
 ///
-/// Example usage:
+/// Exemplo de utilização:
 /// ```
-/// assert_eq!(classify_grade(95), "A");
-/// assert_eq!(classify_grade(75), "C");
-/// assert_eq!(parse_command("start"), "Starting application...");
-/// ```
-
-// ============================================================================
-// EXERCISE 4: Match with Guard Clauses (if conditions)
-// ============================================================================
-/// Use match guards to add additional conditions to patterns.
-///
-/// Requirements:
-/// - Create an enum `Transaction` with variant: Payment { amount: f64 }
-/// - Implement `fn categorize_transaction(transaction: &Transaction) -> &'static str` that:
-///   * amount < 10.0 -> "Small transaction"
-///   * 10.0 <= amount <= 100.0 -> "Regular transaction"
-///   * amount > 100.0 -> "Large transaction"
-/// - Implement `fn is_valid_purchase(item_price: f64, budget: f64) -> bool`
-///   * Returns true if purchase is possible and doesn't exceed budget
-///   * Use match with guards to check conditions
-/// - Implement `fn process_order(quantity: u32, discount_percent: f64) -> f64` that:
-///   * Base price per item: 10.0
-///   * quantity < 5 && discount_percent == 0.0 -> regular price
-///   * quantity >= 5 && quantity < 20 && discount_percent >= 5.0 -> apply 10% discount
-///   * quantity >= 20 && discount_percent >= 15.0 -> apply 20% discount
-///   * all others -> apply no discount
-///
-/// Example usage:
-/// ```
-/// let trans = Transaction::Payment { amount: 50.0 };
-/// assert_eq!(categorize_transaction(&trans), "Regular transaction");
+/// assert_eq!(classificar_nota(95), "A");
+/// assert_eq!(classificar_nota(75), "C");
+/// assert_eq!(processar_comando("iniciar"), "Iniciando aplicação...");
 /// ```
 
 // ============================================================================
-// EXERCISE 5: Pattern Matching with Complex Enums and Option/Result
+// EXERCÍCIO 4: Correspondência com Cláusulas de Proteção (if)
 // ============================================================================
-/// Work with Option and Result types using pattern matching.
+/// Use proteções de correspondência para adicionar condições adicionais aos padrões.
 ///
-/// Requirements:
-/// - Implement `fn safe_divide(a: f64, b: f64) -> Result<f64, &'static str>`
-///   * Returns Ok(result) if b != 0.0
-///   * Returns Err("Division by zero") otherwise
-/// - Implement `fn unwrap_safely(value: Option<i32>) -> i32`
-///   * Returns the value if Some
-///   * Returns 0 if None
-/// - Implement `fn process_result(result: Result<String, String>) -> String` that:
-///   * If Ok: return "Success: " + value
-///   * If Err: return "Error: " + error_message
-/// - Use match to handle all cases explicitly
+/// Requisitos:
+/// - Crie um enum `Transacao` com variante: Pagamento { valor: f64 }
+/// - Implemente `fn categorizar_transacao(transacao: &Transacao) -> &'static str` que:
+///   * valor < 10.0 -> "Transação pequena"
+///   * 10.0 <= valor <= 100.0 -> "Transação regular"
+///   * valor > 100.0 -> "Transação grande"
+/// - Implemente `fn compra_valida(preco_item: f64, orcamento: f64) -> bool`
+///   * Retorna verdadeiro se a compra é possível e não excede o orçamento
+///   * Use match com proteções para verificar condições
+/// - Implemente `fn processar_pedido(quantidade: u32, desconto_percentual: f64) -> f64` que:
+///   * Preço base por item: 10.0
+///   * quantidade < 5 && desconto_percentual == 0.0 -> preço regular
+///   * quantidade >= 5 && quantidade < 20 && desconto_percentual >= 5.0 -> aplicar 10% de desconto
+///   * quantidade >= 20 && desconto_percentual >= 15.0 -> aplicar 20% de desconto
+///   * todos os outros -> sem desconto
 ///
-/// Example usage:
+/// Exemplo de utilização:
 /// ```
-/// assert_eq!(safe_divide(10.0, 2.0), Ok(5.0));
-/// assert_eq!(safe_divide(10.0, 0.0), Err("Division by zero"));
+/// let trans = Transacao::Pagamento { valor: 50.0 };
+/// assert_eq!(categorizar_transacao(&trans), "Transação regular");
 /// ```
 
 // ============================================================================
-// EXERCISE 6: Advanced Pattern Matching - Multiple Conditions
+// EXERCÍCIO 5: Correspondência de Padrões com Enums Complexos e Option/Result
 // ============================================================================
-/// Combine multiple patterns and conditions for complex scenarios.
+/// Trabalhe com tipos Option e Result usando correspondência de padrões.
 ///
-/// Requirements:
-/// - Create an enum `User` with variants:
-///   * Admin { name: String, permissions: u32 }
-///   * Moderator { name: String, channels: Vec<String> }
-///   * Regular { name: String }
-/// - Implement `fn user_access_level(user: &User) -> i32` that:
-///   * Admin with permissions >= 100 -> return 5
-///   * Admin with permissions < 100 -> return 4
-///   * Moderator with more than 3 channels -> return 3
-///   * Moderator with 3 or fewer channels -> return 2
-///   * Regular users -> return 1
-/// - Implement `fn can_perform_action(user: &User, action: &str) -> bool` that:
-///   * Admins can always perform any action
-///   * Moderators can perform actions: "edit", "delete", "ban"
-///   * Regular users can only perform "view"
-///   * Use match guards to check the action string
+/// Requisitos:
+/// - Implemente `fn divisao_segura(a: f64, b: f64) -> Result<f64, &'static str>`
+///   * Retorna Ok(resultado) se b != 0.0
+///   * Retorna Err("Divisão por zero") caso contrário
+/// - Implemente `fn desembrulhar_seguro(valor: Option<i32>) -> i32`
+///   * Retorna o valor se Some
+///   * Retorna 0 se None
+/// - Implemente `fn processar_resultado(resultado: Result<String, String>) -> String` que:
+///   * Se Ok: retorna "Sucesso: " + valor
+///   * Se Err: retorna "Erro: " + mensagem_de_erro
+/// - Use match para tratar todos os casos explicitamente
 ///
-/// Example usage:
+/// Exemplo de utilização:
 /// ```
-/// let admin = User::Admin { name: "Alice".to_string(), permissions: 150 };
-/// assert_eq!(user_access_level(&admin), 5);
-/// assert!(can_perform_action(&admin, "anything"));
+/// assert_eq!(divisao_segura(10.0, 2.0), Ok(5.0));
+/// assert_eq!(divisao_segura(10.0, 0.0), Err("Divisão por zero"));
+/// ```
+
+// ============================================================================
+// EXERCÍCIO 6: Correspondência Avançada de Padrões - Múltiplas Condições
+// ============================================================================
+/// Combine múltiplos padrões e condições para cenários complexos.
+///
+/// Requisitos:
+/// - Crie um enum `Utilizador` com variantes:
+///   * Admin { nome: String, permissoes: u32 }
+///   * Moderador { nome: String, canais: Vec<String> }
+///   * Regular { nome: String }
+/// - Implemente `fn nivel_acesso_utilizador(utilizador: &Utilizador) -> i32` que:
+///   * Admin com permissoes >= 100 -> retorna 5
+///   * Admin com permissoes < 100 -> retorna 4
+///   * Moderador com mais de 3 canais -> retorna 3
+///   * Moderador com 3 ou menos canais -> retorna 2
+///   * Utilizadores Regular -> retorna 1
+/// - Implemente `fn pode_executar_acao(utilizador: &Utilizador, acao: &str) -> bool` que:
+///   * Admins podem sempre executar qualquer ação
+///   * Moderadores podem executar ações: "editar", "eliminar", "banir"
+///   * Utilizadores Regular podem apenas "visualizar"
+///   * Use proteções de correspondência para verificar a string de ação
+///
+/// Exemplo de utilização:
+/// ```
+/// let admin = Utilizador::Admin { nome: "Alice".to_string(), permissoes: 150 };
+/// assert_eq!(nivel_acesso_utilizador(&admin), 5);
+/// assert!(pode_executar_acao(&admin, "qualquer coisa"));
 /// ```
 
