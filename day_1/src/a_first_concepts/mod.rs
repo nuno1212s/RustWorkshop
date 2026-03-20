@@ -10,15 +10,17 @@ mod util;
 // Modifique este código de maneira a que `var` seja uma variável válida
 // com um tipo igual ao tipo retornado pela função
 fn declare_var() -> i32 {
-    var = 10;
+    let var : i32 = 10;
 
     var + 10
 }
 
 // Exercício 2: Tipos de variáveis
 // Modifique este código de maneira a que x seja um vec de inteiros signed de 32 bits
-fn declare_var_2() {
-    let x = vec![];
+fn declare_var_2()  {
+    let x = vec![0u64];
+
+    x
 }
 
 // Exercício 3: Shadowing simples
@@ -58,7 +60,7 @@ fn declare_var_5() -> todo!() {
 // ou anotando na chamada de parse (sintaxe .call::<T>())
 // Explore as capacidades do compilador de inferir os tipos associados.
 fn string_parsing(string: &str) -> todo!() {
-    let var = string.parse().unwrap();
+    let var: i32 = string.parse::<u64>().unwrap() as i32;
 
     println!("{var}");
 
@@ -70,9 +72,11 @@ fn string_parsing(string: &str) -> todo!() {
 fn handle_scope() {
     let x = "hello";
 
-    let x = "world";
+    {
+        let x = "world";
 
-    assert_eq!(x, "world");
+        assert_eq!(x, "world");
+    }
     assert_eq!(x, "hello");
 }
 
@@ -106,7 +110,7 @@ fn handle_scope_drop_order() {
     let log = Rc::new(RefCell::new(vec![]));
 
     let primeira = Droppable::new("Primeira", log.clone());
-    let segunda = Droppable::new("Segunda", log.clone());
+    { let segunda = Droppable::new("Segunda", log.clone()); }
 
     assert_eq!(log.borrow().as_slice(), vec!["Segunda", "Primeira"])
 }
@@ -120,20 +124,20 @@ fn handle_scope_drop_order() {
 
 // Exercício 13: Tipos compostos - Tuplo para Array
 // Transforme o tuplo recebido em um array
-fn from_tuple_to_array(tuple: (u32, u32)) -> [u32; 2] {
-    todo!()
+fn from_tuple_to_array(tuple: (u32, i32)) -> [u32; 2] {
+    [tuple.0, tuple.1 as u32]
 }
 
 // Exercício 14: Tipos compostos - Array para Tuplo
 // Transforme o array recebido em um tuplo
 fn from_array_to_tuple(array: [u32; 2]) -> (u32, u32) {
-    todo!()
+    (array[0], array[1])
 }
 
 // Exercício 15: Tipos compostos - Desconstrução de tuplo
 // Desmonte o tuplo nos argumentos de maneira que fiquem imediatamente
 // disponíveis como `first_arg` e `second_arg`
-fn desmontar_tuplo(todo!(): (i32, i32)) -> i32 {
+fn desmontar_tuplo((first_arg, second_arg): (i32, i32)) -> i32 {
     first_arg + second_arg
 }
 
@@ -156,7 +160,13 @@ fn conditional_slice(input: &[i32]) -> bool {
 // Exercício 18: Controlo de fluxo - Soma de slice
 // Faça a soma de todos os números da slice e retorne
 fn sum_slice(input: &[i32]) -> i32 {
-    todo!()
+    let mut sum = 0;
+
+    for x in input {
+        sum += *x;
+    }
+
+    sum
 }
 
 // Exercício 19: Controlo de fluxo - Verificação de número primo
@@ -202,9 +212,11 @@ fn inner_loop_break() -> i32 {
 // Caso o argumento `negativo` seja true, deve atribuir um número negativo.
 // Caso o argumento seja false, atribuir um número positivo
 fn conditional_atrib(negativo: bool) -> i32 {
-    let val : i32 = todo!();
+    let x = if !negativo {
+        rand::random_range(0..=i32::MAX)
+    } else { 0 };
 
-    val
+    rand::random_range(i32::MIN..0)
 }
 
 // Exercício 23: Mutação - Multiplicação de array

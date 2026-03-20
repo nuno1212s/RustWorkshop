@@ -9,7 +9,7 @@ mod tests;
 // - Lifetime annotations
 // - Clone vs Copy
 
-/// SEÇÃO 1: MOVE SEMANTICS
+/// SECÇÃO 1: MOVE SEMANTICS
 ///
 /// Nestes exercícios aprendemos como o Rust move valores entre variáveis
 /// e como isso afeta a disponibilidade das variáveis originais
@@ -169,7 +169,7 @@ fn borrow_conflict() -> i32 {
 
     *ref1 = 5;
     *ref2 = 5;
-    
+
     todo!()
 }
 
