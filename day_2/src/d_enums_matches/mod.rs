@@ -1,4 +1,5 @@
-mod test;
+use std::f64::consts::PI;
+use std::ops::Deref;
 
 /// Enums e Data Oriented Design
 
@@ -12,6 +13,68 @@ mod test;
 /// Local base (x,y), cor e ângulo de colocação
 
 /// Para conseguir implementar isto, deve recorrer a Composição e sum types
+
+pub struct FormaGeral {
+    x: f64,
+    y: f64,
+    cor: String,
+    angulo: f64,
+    forma: Forma
+}
+
+enum Forma {
+    Quadrado(f64),
+    Circulo(f64),
+    Elipse {
+        minor: f64,
+        major: f64
+    },
+    Triangulo {
+        base: f64,
+        altura: f64
+    },
+    Cubo(f64),
+    Cilindro {
+        raio: f64,
+        altura: f64
+    },
+    Esfera(f64)
+}
+
+impl FormaGeral {
+
+    fn area(&self) {
+
+    }
+}
+
+impl Forma {
+    fn area(&self) -> f64 {
+        match self {
+            Forma::Quadrado(lado) => {
+                lado.powi(2)
+            }
+            Forma::Circulo(raio) => {
+                PI * raio.powi(2)
+            }
+            Forma::Elipse { minor, major } => {
+                PI * minor * major
+            }
+            Forma::Triangulo { base, altura } => {
+                (base * altura) / 2f64
+            }
+            Forma::Cubo(lado) => {
+                6f64 * lado.powi(2)
+            }
+            Forma::Cilindro { raio, altura } => {
+                2f64 * f64::PI * raio * (altura + raio)
+            }
+            Forma::Esfera(raio) => {
+                4f64 * f64::PI * raio.powi(2)
+            }
+        }
+    }
+}
 
 // ============================================================================
 // EXERCÍCIO 3: Correspondência de Strings e Números

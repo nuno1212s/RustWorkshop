@@ -88,7 +88,7 @@ fn find_in_vector(vec: &[i32], target: i32) -> Option<usize> {
 /// SEÇÃO 3: BORROWING MUTÁVEL (EMPRÉSTIMO MUTÁVEL)
 ///
 /// Nestes exercícios aprendemos a utilizar referências mutáveis (&mut T)
-/// Permitem modificar o valor emprestado, mas apenas uma referência mútavel pode existir por vez
+/// Permitem modificar o valor emprestado, mas apenas uma referência mutável pode existir por vez
 
 // Exercício 8: Referência Mutável Simples
 // Implemente esta função para que aceite uma referência mutável a um vetor

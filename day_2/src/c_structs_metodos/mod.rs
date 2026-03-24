@@ -1,3 +1,5 @@
+use std::fs::copy;
+
 #[cfg(test)]
 mod tests;
 
@@ -18,19 +20,78 @@ mod tests;
 // `set_lado` -> altera o valor de `lado` do quadrado. Aceita um numero de virgula flutuante de 64 bits
 // `set_cor` -> altera o valor de `cor` do quadrado. Aceita uma string
 
+#[derive(Debug)]
+struct Quadrado {
+    lado: f64,
+    cor: String
+}
+
+impl Quadrado {
+
+    fn new(lado: f64, cor: String) -> Self {
+        Quadrado {
+            lado, cor
+        }
+    }
+
+    fn new_2(lado: f64, cor: String) -> Quadrado {
+        Self {
+            lado, cor
+        }
+    }
+
+    fn copia_quadrado_cor_dif(existing: Quadrado, cor: String) -> Self {
+        Self {
+            cor,
+            .. existing
+        }
+    }
+
+    fn set_lado(&mut self, lado: f64) {
+        self.lado = lado;
+    }
+
+    fn set_lado_extenso(self: &mut Self, lado: f64) {
+        self.lado = lado;
+    }
+
+    fn set_cor(&mut self, cor: String) {
+        self.cor = cor;
+    }
+
+    fn consome_quadrado(self: Self) {
+        // Tomo a ownership da instância
+    }
+
+}
+
+fn consome_quadrado_analg(quadrado: Quadrado) {
+    // Tomo a ownership da instância
+}
+
+fn test_consumir() {
+    let quadrado = Quadrado::new(2.0, String::from("vermelho"));
+    println!("{:?}", quadrado);
+    quadrado.consome_quadrado();
+    // quadrado já não é valido
+    println!("{:?}", quadrado)
+}
+
 // Faça um Tuple Struct `Ponto3D` que represente um ponto tri dimensional de f64
 
+struct Ponto3D(f64, f64, f64);
+
 // Desconstrua o struct no nome do argumento, utilizando as variáveis `x`, `y`, `z`
-fn deconstruct_tuple(todo!(): Ponto3D) -> (f64, f64, f64) {
+fn deconstruct_tuple(Ponto3D(x, y, z): Ponto3D) -> (f64, f64, f64) {
     (x, y, z)
 }
 
 fn construct_tuple(x: f64, y: f64, z: f64) -> Ponto3D {
-    todo!()
+    Ponto3D(x, y, z)
 }
 
 fn first_member(ponto: Ponto3D) -> f64 {
-    todo!()
+    ponto.0
 }
 
 fn third_member(ponto: Ponto3D) -> f64 {
@@ -46,22 +107,30 @@ struct TestStruct {
 // Deconstrua o struct `test_struct` de maneira a obter a ownership dos
 // objetos contidos
 fn deconstruct_struct(test_struct: TestStruct) -> (String, u32) {
-    todo!()
+    let TestStruct {
+        test_clone_obj, test_copy_obj
+    } = test_struct;
+
+    (test_clone_obj, test_copy_obj)
 }
 
 // Extraia o `test_copy_obj` de `test_struct` sem desconstruir o struct
 fn take_copy_obj(test_struct: TestStruct) -> (TestStruct, u32) {
-    todo!()
+    let copy_obj = test_struct.test_copy_obj;
+
+    (test_struct, copy_obj)
 }
 
 // Extraia o `test_clone_obj` de `test_struct` sem desconstruir o struct
 fn take_cloneable_obj(test_struct: TestStruct) -> (TestStruct, String) {
-    todo!()
+    let clone_obj = test_struct.test_clone_obj.clone();
+
+    (test_struct, clone_obj)
 }
 
 // Extraia o `test_clone_obj` da ref a `test_struct`.
 fn take_cloneable_obj_from_ref(test_struct: &TestStruct) -> String {
-    todo!()
+    test_struct.test_clone_obj.clone()
 }
 
 /// Modelação de dados:
@@ -82,15 +151,15 @@ struct InnerComplexOwnershipProblem {
 impl ComplexOwnershipProblem {
 
     fn test_fn(&mut self) {
-        self.inner_struct.test_fn(self);
+        self.inner_struct.test_fn(&mut self.test_var);
     }
 
 }
 
 impl InnerComplexOwnershipProblem {
 
-    fn test_fn(&mut self, test_struct: &mut ComplexOwnershipProblem) {
-        test_struct.test_var = self.test_obj.test_clone_obj.clone();
+    fn test_fn(&mut self, test_var: &mut String) {
+        *test_var = self.test_obj.test_clone_obj.clone();
     }
 
 }
@@ -100,7 +169,7 @@ impl InnerComplexOwnershipProblem {
 
 struct Node {
     valor: i32,
-    proximo: Option<todo!()>
+    proximo: Option<Box<Node>>
 }
 
 struct Lista {

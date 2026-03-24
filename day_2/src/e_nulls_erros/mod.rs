@@ -75,7 +75,11 @@ use thiserror::Error;
 ///   * Usa result_para_option para converter o resultado
 ///   * Utilize os examplos `alice` e `bob`. Onde alice é um utilizador válido e bob
 ///  não
+fn  option_para_result(opcao: Option<i32>) -> Result<i32, ExampleError> {
+    let valor = opcao.ok_or(ExampleError::DivPorZero)?;
 
+    todo!()
+}
 
 // ============================================================================
 // EXERCÍCIO 4: O Operador ? (try operator)
